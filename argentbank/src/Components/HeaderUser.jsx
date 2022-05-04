@@ -21,7 +21,7 @@ export default function HeaderUser() {
           <i className="fa fa-user-circle"></i>
           Tony
         </Link>
-        <Link className="main-nav-item" to="/signup/">
+        <Link className="main-nav-item" to="/user/signup/">
           <i className="fa fa-sign-out"></i>
           Sign Out
         </Link>

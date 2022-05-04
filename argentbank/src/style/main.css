@@ -279,3 +279,8 @@ body {
         width: 200px;
     }
 }
+
+.invalid {
+    color: #e50505de;
+    font-weight: 500;
+}
