@@ -18,3 +18,4 @@ export default axios.create({
 //     //On traite ici les erreurs éventuellement survenues
 //     console.log(erreur);
 // });
+

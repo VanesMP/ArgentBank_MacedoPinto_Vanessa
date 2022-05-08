@@ -3,7 +3,7 @@ import Footer from "../Components/Footer";
 import HeaderUser from "../Components/HeaderUser";
 
 
-export default function User() {
+export default function Profile() {
 
     return(
         <div>

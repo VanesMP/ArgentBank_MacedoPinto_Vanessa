@@ -3,11 +3,23 @@ import '../style/main.css';
 import Footer from '../Components/Footer';
 import Header from '../Components/Header';
 import { useForm } from 'react-hook-form';
-import API from '../service/api.jsx';
+import getToken from '../service/axios';
+import { useNavigate } from 'react-router-dom';
+// import API from '../service/api.jsx';
+// import API from '../service/api.jsx';
 // import { Link } from 'react-router-dom';
 
 
 export default function SignUp() {
+
+  // const AxiosInstance = API
+  
+  // AxiosInstance.interceptors.request.use(function (config) {
+  //   // Do something before request is sent
+  //   let token = localStorage.getItem("token");
+  //   config.headers["Authorization"] = "Bearer" + token;
+  //   console.log(config);
+  // });
 // export default class SignUp extends React.Component {
   // state = {
   //   email: '',
@@ -83,16 +95,28 @@ export default function SignUp() {
   //3: error: recupere et peux afficher les erreurs
   const {register, handleSubmit, formState:{errors, isSubmitting}} = useForm()
 
-  const onSubmit = (data) => {
+  let navigate = useNavigate();
+  const profilPage=(data)=>{
+    navigate('/user/profile')
+  }
+
+
+  async function onSubmit(data, e) {
+    e.preventDefault();
     console.log('data: ',data);
    
-    API
-        .post(
-            '/user/login',
-            data 
-         )
-        .then(response => {console.log('Response data axiospost: ', response.data)})
-        .catch(error => {console.log('Error data axiospost: ' ,error.data)});
+    getToken(data)
+    
+
+    // API
+    //     .post(
+    //         '/user/login',
+    //         data 
+    //      )
+    //     .then(response => {console.log('Response data axiospost: ', response.data)})
+    //     .catch(error => {console.log('Error data axiospost: ' ,error.data)});
+
+      profilPage()  
   }
 
   //le formulaire est il en cours de traitement: desactive ce champs si il est cours d'envoie
