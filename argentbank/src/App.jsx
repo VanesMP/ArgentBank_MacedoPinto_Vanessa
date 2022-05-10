@@ -4,11 +4,11 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import HomePage from './pages/HomePage';
 import SignUp from './pages/SignUp';
 import Profile from './pages/Profile';
-// // on importe le Provider
-// //C’est grâce au Provider les cutom hooks auront accès au store.
-import { Provider } from "react-redux";
-// // on importe le store
-import { store } from "./service/store.jsx";
+// // // on importe le Provider
+// // //C’est grâce au Provider les cutom hooks auront accès au store.
+// import { Provider } from "react-redux";
+// // // on importe le store
+// import { store } from "./service/store.jsx";
 
 // import { createStore } from 'redux';
 
@@ -23,7 +23,7 @@ function App() {
 
     return ( 
         <div className='App'>
-    <Provider store={store}>
+    {/* <Provider store={store}> */}
     <Router>  
         <Routes>
           <Route exact path="/" element={<HomePage />}/>
@@ -31,7 +31,7 @@ function App() {
           <Route path='/user/profile' element={<Profile/>}/>
         </Routes> 
     </Router> 
-    </Provider>
+    {/* </Provider> */}
         </div>
     );
 }

@@ -1,4 +1,4 @@
-// import { createStore } from 'redux';
+// import { createStore } from 'redux';(deprecated)
 
 // Pour interagir avec Redux, React-Redux utilise des custom hooks
 // Les custom hooks sont des hooks écrits par les développeurs, 
@@ -15,3 +15,18 @@
 //Immer s'occupe de faire des copies de tous les objets/tableaux qui sont modifiés pour ne pas changer le state précédent.
 //Avec Immer, plus besoin de destructuring, on fournit un state initial et des instructions de modifications, 
 //puis Immer va produire un nouveau state pour nous
+
+import { configureStore } from '@reduxjs/toolkit';
+import globalReducer from './signUpSlice';
+
+
+export const store = configureStore({
+    reducer: {
+        globalState: globalReducer,
+    }
+  })
+
+  store.subscribe(() => {
+    console.log("Nouveau state:");
+    console.log(store.getState());
+  });
