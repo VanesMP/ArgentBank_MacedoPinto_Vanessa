@@ -1,41 +1,74 @@
+import React from "react";
 import { useSelector } from "react-redux";
 import Account from "../Components/Account";
 import Footer from "../Components/Footer";
 import HeaderUser from "../Components/HeaderUser";
 import { useDispatch } from "react-redux";
-
-import { getUserData } from '../service/axios';
-//import { AddToken } from '../service/signUpSlice';
+import { useForm } from 'react-hook-form';
+import { changeName, getUserData } from '../service/axios';
+//import { AddFirstName, AddLastName } from '../service/signUpSlice';
 
 export default function Profile() {
 
-  const dispatch = useDispatch();
-  
-  const token = useSelector((state) => state.globalState.token)
-  const firstName = useSelector((state) => state.globalState.firstName)
-  const lastName = useSelector((state) => state.globalState.lastName)
- 
-  getUserData(token, dispatch)
-
-  //function edit name Put request = onClick
-const buttonEdit = document.getElementById('buttonEditName')
-const buttonSave = document.getElementById('changeName')
+//selection des elements boutons
+// const buttonEdit = document.getElementById('buttonEditName');
+const buttonEdit = React.createRef()
 console.log(buttonEdit)
+const buttonSave = React.createRef();
 console.log(buttonSave)
 
+//methode pour faire apparaitre le editName
 const clickEdit = () => {
   console.log('click edit')
-  buttonEdit.classList.remove('displayInlineBlock')
-  buttonEdit.classList.add('displayNone')
-  buttonSave.classList.add('displayInlineBlock')
-  buttonSave.classList.remove('displayNone')
+  // if(!buttonEdit === null){}
+  buttonEdit.current.classList.remove('displayInlineBlock')
+  buttonSave.current.classList.remove('displayNone')
+  buttonSave.current.classList.add('displayInlineBlock')
+  buttonEdit.current.classList.add('displayNone')
 }
-const clickModify = () => {
+//methode pour faire disparaitre le editName
+const clickDisplay = () => {
   console.log('click save')
-  buttonEdit.classList.remove('displayNone')
-  buttonEdit.classList.add('displayInlineBlock')
-  buttonSave.classList.remove('displayInlineBlock')
-  buttonSave.classList.add('displayNone')
+  buttonEdit.current.classList.remove('displayNone')
+  buttonSave.current.classList.remove('displayInlineBlock')
+  buttonSave.current.classList.add('displayNone')
+  buttonEdit.current.classList.add('displayInlineBlock')
+}
+
+  const dispatch = useDispatch();
+  
+  const profileToken = useSelector((state) => state.globalState.token)
+  console.log({profileToken})
+  const firstName = useSelector((state) => state.globalState.firstName)
+  console.log({firstName})
+  const lastName = useSelector((state) => state.globalState.lastName)
+ 
+  getUserData(profileToken, dispatch)
+
+// const changeNameRequest = () => {
+
+// }
+
+//recuperation avec react-hook-form des valeurs des inputs
+const {register, handleSubmit, setValue} = useForm(
+  {
+  defaultValues:{
+  firstName: firstName,
+  lastName: lastName
+}})
+
+setValue("firstName", firstName)
+setValue("lastName", lastName)
+
+async function onSubmit(data) {
+  // e.preventDefault();
+  console.log('data: ',data);
+  console.log('submit firstName:', firstName)
+  console.log('userToken: ', profileToken);
+
+  changeName(data, profileToken, dispatch)
+
+  // clickDisplay()
 }
 
 
@@ -45,18 +78,20 @@ const clickModify = () => {
     <main className="main bg-dark">
       <div className="header">
         <h1>Welcome back<br />{firstName} {lastName}</h1>
-        <button id="buttonEditName" onClick={clickEdit}>Edit Name</button>
-        <div id="changeName" className="displayNone">
+        <button id="buttonEditName" ref={buttonEdit} onClick={clickEdit}>Edit Name</button>
+        <div id="changeName" className="displayNone" ref={buttonSave} >
+        <form onSubmit={handleSubmit(onSubmit, getUserData(profileToken, dispatch))}>
           <div className="inputs">
             <label htmlFor='firstName'></label>
-            <input type="text" id="firstName" name='firstName' value={firstName}/> 
+            <input type="text" id="firstName" name='firstName' {...register("firstName")}/> 
             <label htmlFor='lastName'></label>
-            <input type="text" id="lastName" name='lastName' value={lastName}/> 
+            <input type="text" id="lastName" name='lastName' {...register("lastName")}/> 
           </div> 
           <div>
-            <button id="buttonSaveName" onClick={clickModify}>Save</button>
-            <button id="buttonCancelName" onClick={clickModify}>Cancel</button>
+            <button id="buttonSaveName" type="submit" value="Submit" onClick={clickDisplay}>Save</button>
+            <button id="buttonCancelName" onClick={clickDisplay}>Cancel</button>
           </div>
+          </form>
         </div>
       </div>
       <h2 className="sr-only">Accounts</h2>

@@ -33,7 +33,8 @@ export default function SignUp() {
     getToken(data, navigate, dispatch)
     
     dispatch(AddEmail(data.email));
-    dispatch(AddPassword(data.password));       
+    dispatch(AddPassword(data.password)); 
+    
   }
 
   return (
