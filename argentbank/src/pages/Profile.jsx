@@ -6,29 +6,32 @@ import HeaderUser from "../Components/HeaderUser";
 import { useDispatch } from "react-redux";
 import { useForm } from 'react-hook-form';
 import { changeName, getUserData } from '../service/axios';
-//import { AddFirstName, AddLastName } from '../service/signUpSlice';
+
+/** Render of user profile page
+ * @function Profile 
+ * @returns {JSX}
+ */
 
 export default function Profile() {
 
-//selection des elements boutons
-// const buttonEdit = document.getElementById('buttonEditName');
+//Using method createRef() hook to select DOM elements
 const buttonEdit = React.createRef()
-console.log(buttonEdit)
 const buttonSave = React.createRef();
-console.log(buttonSave)
 
-//methode pour faire apparaitre le editName
+/**Method to make the name change appear
+ * @function clickEdit 
+ */
 const clickEdit = () => {
-  console.log('click edit')
-  // if(!buttonEdit === null){}
   buttonEdit.current.classList.remove('displayInlineBlock')
   buttonSave.current.classList.remove('displayNone')
   buttonSave.current.classList.add('displayInlineBlock')
   buttonEdit.current.classList.add('displayNone')
 }
-//methode pour faire disparaitre le editName
+
+/**Method to make the name change appear
+ * @function clickDisplay
+ */
 const clickDisplay = () => {
-  console.log('click save')
   buttonEdit.current.classList.remove('displayNone')
   buttonSave.current.classList.remove('displayInlineBlock')
   buttonSave.current.classList.add('displayNone')
@@ -36,45 +39,42 @@ const clickDisplay = () => {
 }
 
   const dispatch = useDispatch();
-  
+//useselector to get store element (token, firstname, lastname)
   const profileToken = useSelector((state) => state.globalState.token)
-  console.log({profileToken})
   const firstName = useSelector((state) => state.globalState.firstName)
-  console.log({firstName})
   const lastName = useSelector((state) => state.globalState.lastName)
- 
+//Method call to get the token and access the profile page
   getUserData(profileToken, dispatch)
 
-// const changeNameRequest = () => {
-
-// }
-
-//recuperation avec react-hook-form des valeurs des inputs
+//Recovery with react-hook-form of input values
 const {register, handleSubmit, setValue} = useForm(
   {
   defaultValues:{
   firstName: firstName,
   lastName: lastName
 }})
-
+//React-Hook-From library methode : setValue()
+//This function allows you to dynamically set the value of a registered field 
+//and have the options to validate and update the form state. 
+//At the same time, it tries to avoid unnecessary rerender.
 setValue("firstName", firstName)
 setValue("lastName", lastName)
 
+/**
+Method to submit name change form to backend with put request on changeName()
+ * @function onSubmit
+ * @param {object} data (new user firstName, new user lastName)
+ */
 async function onSubmit(data) {
-  // e.preventDefault();
-  console.log('data: ',data);
-  console.log('submit firstName:', firstName)
-  console.log('userToken: ', profileToken);
 
   changeName(data, profileToken, dispatch)
 
-  // clickDisplay()
 }
 
 
   return(
         <div>
-    <HeaderUser />
+    <HeaderUser name={firstName} />
     <main className="main bg-dark">
       <div className="header">
         <h1>Welcome back<br />{firstName} {lastName}</h1>
@@ -98,36 +98,6 @@ async function onSubmit(data) {
       <Account titleAccount="Argent Bank Checking (x8349)" amountAccount="$2,082.79" descriptionAccount="Available Balance" />
       <Account titleAccount="Argent Bank Savings (x6712)" amountAccount="$10,928.42" descriptionAccount="Available Balance" />
       <Account titleAccount="Argent Bank Credit Card (x8349)" amountAccount="$184.30" descriptionAccount="Current Balance" />
-      {/* <section className="account">
-        <div className="account-content-wrapper">
-          <h3 className="account-title">Argent Bank Checking (x8349)</h3>
-          <p className="account-amount">$2,082.79</p>
-          <p className="account-amount-description">Available Balance</p>
-        </div>
-        <div className="account-content-wrapper cta">
-          <button className="transaction-button">View transactions</button>
-        </div>
-      </section>
-      <section className="account">
-        <div className="account-content-wrapper">
-          <h3 className="account-title">Argent Bank Savings (x6712)</h3>
-          <p className="account-amount">$10,928.42</p>
-          <p className="account-amount-description">Available Balance</p>
-        </div>
-        <div className="account-content-wrapper cta">
-          <button className="transaction-button">View transactions</button>
-        </div>
-      </section>
-      <section className="account">
-        <div className="account-content-wrapper">
-          <h3 className="account-title">Argent Bank Credit Card (x8349)</h3>
-          <p className="account-amount">$184.30</p>
-          <p className="account-amount-description">Current Balance</p>
-        </div>
-        <div className="account-content-wrapper cta">
-          <button className="transaction-button">View transactions</button>
-        </div>
-      </section> */}
     </main>
     <Footer />
         </div>

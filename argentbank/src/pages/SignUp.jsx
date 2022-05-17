@@ -5,36 +5,38 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from "react-redux";
 import Footer from '../Components/Footer';
 import Header from '../Components/Header';
-
 import { getToken } from '../service/axios';
 import { AddEmail, AddPassword } from '../service/signUpSlice';
 
+/**Render to sign up page
+ * @function SignUp
+ * @returns {JSX}
+ */
 
 export default function SignUp() {
 
-
-  //useForm est plus performant dans ce cas que le useState, et le onChange,
-  // on a pas de changement d'etat a chaque saisi de l'utilisateur ce qui peux eviter des rendu en chaine
-  //useForm: va permettre de récupérer les éléments à utiliser.
-  //1:register: va permettre d' enregistrer/sauvegarder les valeurs que vont prendre un champs
-  //name='text' ref={register} est remplacer par = {...register('text')} name='text' dans v7
-  //2:handleSubmit: fct du formulaire pour transferer les données
-  //3:formState:  permet de récuperer des information sur l' etat du formulaire
-  //3: error: recupere et peux afficher les erreurs
+//Using the React-Hook-Form library
+//The advantage of this library:
+//Custon hook for managing forms: useForm: avoid rendering to the chain that we would have with an onChange(), better performance of the page
+  //1:register: This method allows you to register an input/ select an element/ apply validation rules to React Hook Form, based on the HTML standard.
+  //2:handleSubmit: This function will receive the form data if form validation is successful.
+  //3:formState:  Option that allows to retrieve information on the state of the form(error or isSubmitting)
   const {register, handleSubmit, formState:{errors, isSubmitting}} = useForm()
   
   const dispatch = useDispatch();
   let navigate = useNavigate();
 
+/**Form submission method to login user page
+ * @function onSubmit
+ * @param {object} data (user email and user password)
+ */
   async function onSubmit(data, e) {
     e.preventDefault();
-    console.log('data: ',data);
    
     getToken(data, navigate, dispatch)
     
     dispatch(AddEmail(data.email));
-    dispatch(AddPassword(data.password)); 
-    
+    dispatch(AddPassword(data.password));     
   }
 
   return (

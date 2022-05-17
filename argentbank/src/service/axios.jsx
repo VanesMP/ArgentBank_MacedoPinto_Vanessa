@@ -9,15 +9,13 @@ function getToken(data, navigate, dispatch){
         data 
         )
         .then(response => {
-            // console.log('Response data axiospost signup: ', response.data)
-            // console.log(response.data.body.token)
             if(response.status === 200){
                 dispatch(AddToken(response.data.body.token))
                 navigate('/user/profile')
             }
     return response.data
-})
-// .catch(error => {console.log('Error data axiospost: ', error)})
+}).catch(error => {
+    console.log('Error data axiospost: ', error)})
 }
 
 function getUserData(token, dispatch){
@@ -30,16 +28,15 @@ function getUserData(token, dispatch){
         }} 
         )
         .then(response => {
-            // console.log('Response data axiospost profile: ', response)
         if(response.status === 200){
         //recupere nom + prenom +id
                 dispatch(AddId(response.data.body.id))
                 dispatch(AddFirstName(response.data.body.firstName))
                 dispatch(AddLastName(response.data.body.lastName))
          }
-    return response
-})
-// .catch(error => {console.log('Error data axiospost: ', error)})
+            return response
+        }).catch(error => {
+            console.log('Error data axiospost: ', error)})
 }
 
 function changeName(data, token, dispatch){

@@ -6,6 +6,11 @@ import Features from '../Components/Features';
 import Footer from '../Components/Footer';
 import Header from '../Components/Header';
 
+/**Render to home page
+ * @function HomePage
+ * @returns {JSX}
+ */
+
 export default function HomePage() {
 
     return(
