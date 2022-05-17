@@ -44,8 +44,7 @@ export const {
   AddToken,
   AddId,
   AddLastName,
-  AddFirstName, 
-  LogOut
+  AddFirstName
 } = signUpSlice.actions
 
 // Action creators are generated for each case reducer function
