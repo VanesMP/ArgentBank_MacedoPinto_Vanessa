@@ -32,7 +32,10 @@ const signUpSlice = createSlice({
     },
     AddFirstName: (state, action) => {
       state.firstName = action.payload
-    }}
+    }},
+    LogOut() {
+      return initialState
+    }
 })
 
 
@@ -44,7 +47,8 @@ export const {
   AddToken,
   AddId,
   AddLastName,
-  AddFirstName
+  AddFirstName, 
+  LogOut
 } = signUpSlice.actions
 
 // Action creators are generated for each case reducer function

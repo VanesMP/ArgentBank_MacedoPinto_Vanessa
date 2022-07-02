@@ -70,6 +70,11 @@ input {
     width: 200px;
 }
 
+.name {
+    display: flex;
+    flex-direction: row;
+}
+
 .hero {
     background-image: url('../img/bank-tree.jpeg');
     background-position: 0 -50px;

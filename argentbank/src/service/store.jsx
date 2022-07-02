@@ -9,13 +9,6 @@
 // Utiliser useDispatch  pour envoyer des actions depuis les composants.
 // Utiliser useSelector  pour extraire des morceaux de state et mettre à jour le composant en cas de changement de state.
 
-
-// import produce from "immer";
-
-//Immer s'occupe de faire des copies de tous les objets/tableaux qui sont modifiés pour ne pas changer le state précédent.
-//Avec Immer, plus besoin de destructuring, on fournit un state initial et des instructions de modifications, 
-//puis Immer va produire un nouveau state pour nous
-
 import { configureStore } from '@reduxjs/toolkit';
 import globalReducer from './signUpSlice';
 
@@ -26,7 +19,7 @@ export const store = configureStore({
     }
   })
 
-  // store.subscribe(() => {
-  //   console.log("Nouveau state:");
-  //   console.log(store.getState());
-  // });
+//   store.subscribe(() => {
+//     console.log("Nouveau state:");
+//     console.log(store.getState());
+//   });

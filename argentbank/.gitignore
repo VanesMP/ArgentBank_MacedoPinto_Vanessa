@@ -4,6 +4,7 @@
 /node_modules
 /.pnp
 .pnp.js
+/Project-10-Bank-API
 
 # testing
 /coverage

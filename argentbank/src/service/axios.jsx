@@ -15,7 +15,7 @@ function getToken(data, navigate, dispatch){
             }
     return response.data
 }).catch(error => {
-    console.log('Error data axiospost: ', error)})
+    console.log('Error data token axiospost: ', error)})
 }
 
 function getUserData(token, dispatch){
@@ -29,19 +29,17 @@ function getUserData(token, dispatch){
         )
         .then(response => {
         if(response.status === 200){
-        //recupere nom + prenom +id
+        //recupere nom + prenom
                 dispatch(AddId(response.data.body.id))
                 dispatch(AddFirstName(response.data.body.firstName))
                 dispatch(AddLastName(response.data.body.lastName))
          }
             return response
         }).catch(error => {
-            console.log('Error data axiospost: ', error)})
+            console.log('Error data port name axiospost: ', error)})
 }
 
 function changeName(data, token, dispatch){
-    console.log(token)
-    console.log(data)
     API
     .put(
         '/user/profile',
@@ -50,15 +48,14 @@ function changeName(data, token, dispatch){
         'Authorization': `Bearer  ${token}`,
     }})
     .then(response => {
-        console.log('Changement de nom: ', response.data)
         if(response.status === 200){
-            //recupere nom + prenom +id
+            //recupere nom + prenom
                     dispatch(AddFirstName(response.data.body.firstName))
                     dispatch(AddLastName(response.data.body.lastName))
              }
         return response
-    })
-    console.log("envoie des donnees")
+    }).catch(error => {
+        console.log('Error data put name axiospost: ', error)})
 }
 
 export {
