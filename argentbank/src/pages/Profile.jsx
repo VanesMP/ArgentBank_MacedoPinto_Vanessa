@@ -1,4 +1,5 @@
 import React from "react";
+import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import Account from "../Components/Account";
 import Footer from "../Components/Footer";
@@ -6,6 +7,7 @@ import HeaderUser from "../Components/HeaderUser";
 import { useDispatch } from "react-redux";
 import { useForm } from 'react-hook-form';
 import { changeName, getUserData } from '../service/axios';
+import { useNavigate } from "react-router-dom";
 
 /** Render of user profile page
  * @function Profile 
@@ -13,6 +15,22 @@ import { changeName, getUserData } from '../service/axios';
  */
 
 export default function Profile() {
+
+//useselector to get store element (token, firstname, lastname)
+const profileToken = useSelector((state) => state.globalState.token)
+const firstName = useSelector((state) => state.globalState.firstName)
+const lastName = useSelector((state) => state.globalState.lastName) 
+
+///////////////////////////////////////////////////////////////////// Modification : 
+//redirection vers la page de connexion si l' utilisateur n 'est pas connecté et que l' on rentre directement le path dans l url
+let navigateSignUp =  useNavigate()
+  useEffect(() => {
+    if (profileToken !== null){
+      navigateSignUp('/user/profile')
+    } else {
+      navigateSignUp('/user/signup')
+    }
+  }, [navigateSignUp, profileToken]) 
 
 //Using method createRef() hook to select DOM elements
 const buttonEdit = React.createRef()
@@ -39,10 +57,8 @@ const clickDisplay = () => {
 }
 
   const dispatch = useDispatch();
-//useselector to get store element (token, firstname, lastname)
-  const profileToken = useSelector((state) => state.globalState.token)
-  const firstName = useSelector((state) => state.globalState.firstName)
-  const lastName = useSelector((state) => state.globalState.lastName)
+
+
 //Method call to get the token and access the profile page
   getUserData(profileToken, dispatch)
 
